@@ -1,5 +1,4 @@
 import mysql.connector
-from mysql.connector import connect, Error
 from os import system, name
 from getpass import getpass
 from time import sleep
@@ -37,18 +36,14 @@ def ekle():
     kesinlik = input("\nBelirtilen bilgileri rehbere ekle? (E/h)")
     if kesinlik == "E":
         print("Ekleniyor")
-        girkomut = """
-INSERT INTO genel
-(isim, soyisim, yas, meslek)
-VALUES ( %s, %s, %s, %s )
-"""
-        kayit = [
-            (isim, soyisim, yas, meslek),]
-        with connection.cursor() as cursor:
-            cursor.executemany(girkomut, kayit)
-            connection.commit()
-        print("Eklendi!")
-        sleep(3)
+        komut = "INSERT INTO genel (isim, soyisim, yas, meslek) VALUES ( %s, %s, %s, %s )"
+        kayit = (isim, soyisim, yas, meslek)
+        etki.execute(komut, kayit)
+        vt.commit()
+        print(etki.rowcount, "Eklendi!")
+        sleep(2)
+        temizle()
+
 def temizle():
     #windows
     if name == 'nt':
@@ -58,21 +53,6 @@ def temizle():
     else:
         _ = system('clear')
     print("")
-def baglan():
-    try:
-        with connect(
-            host="melihakay.com",
-            user="py3",
-            password=getpass("Şifre: "),
-            database=("rehber"),
-            ) as connection:
-            print("Başarılı Giriş! Lütfen Bekleyin...")
-            print(connection)
-            sleep(2)
-            temizle()
-    except Error as e:
-            print("Başarısız Giriş!: \n", e)
-            exit()
 def cikis():
     temizle()
     print("2sn içinde çıkış")
@@ -88,7 +68,16 @@ def cikis():
 #Giriş
 temizle()
 print("Rehber (version 0.2.1)")
-baglan()
+vt = mysql.connector.connect(
+        host="melihakay.com",
+        user="py3",
+        password=getpass("Şifre: "),
+        database=("rehber"),
+        )
+print("Başarılı Giriş! Lütfen Bekleyin...")
+etki = vt.cursor()
+sleep(2)
+temizle()
 
 while True:
     temizle()
