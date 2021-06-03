@@ -1,3 +1,6 @@
+#ekleme fonkisyonu okey
+#görüntüleme ve tablo fonksiyonu gerek
+
 import mysql.connector
 from os import system, name
 from getpass import getpass
@@ -85,10 +88,11 @@ while True:
     if isaret == "bitti":
         cikis()
     elif isaret == "yardim":
-        print("""
+        input("""
 Çıkış için bitti,
 Eklemek için ekle,
-        """)
+Devam etmek için herhangi bir tuşa basın...
+""")
     elif isaret == "ekle":
         temizle()
         ekle()
