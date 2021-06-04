@@ -1,3 +1,4 @@
 from giris import *
 
-kullaniciGiris()
+mevcutKullanici = kullaniciGiris()
+print(mevcutKullanici)

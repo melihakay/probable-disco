@@ -86,3 +86,4 @@ def giris(ad, sifre):
 def kullaniciGiris():
     vtsonuc = vtKontrol()
     mevcutKullanici = girisKarar()
+    return mevcutKullanici
