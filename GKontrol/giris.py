@@ -3,21 +3,23 @@
 import sqlite3 as sl
 from sys import argv
 import hashlib
+from getpass import getpass
 
 db = sl.connect("temel.vt")
 etki = db.cursor()
 
 def girisKarar():
     while True:
-        x = input("Komut: (giris, yeni)")
+        x = input("Komut: (giris, yeni)\n > ")
         if x == "yeni":
             while True:
                 kullanici = input("Kullanıcı adı: ")
                 durum = userKontrol(kullanici)
-                if durum != "Kullanıcı mevcut":
+                if durum != "mevcut":
                     break
-            sifre = input("Şifre: ")
-            sifre2 = input("Şifre tekrar: ")
+                print("Kullanıcı mevcut")
+            sifre = getpass("Şifre: ")
+            sifre2 = getpass("Şifre tekrar: ")
             if sifre == sifre2:
                 yeniKullanici(kullanici, sifre)
         elif x == "giris":
@@ -28,7 +30,7 @@ def girisKarar():
                     if durum == "mevcut":
                         break
                     print("Kullanıcı mevcut değil...")
-                sifre = input("Şifre: ")
+                sifre = getpass("Şifre: ")
                 dq = giris(kullanici, sifre)
                 if dq != 17:
                     break
@@ -60,7 +62,6 @@ def userKontrol(ad):
     kontrol = """('{}',)"""
     for a in userlistesi:
         if str(a) == str(kontrol.format(ad)):
-            print("Kullanıcı mevcut")
             return "mevcut"
 def yeniKullanici(ad, sifre):
     hash = sifrele(sifre)
@@ -77,11 +78,11 @@ def giris(ad, sifre):
     hsifre = str(lsifre[0])
 
     if gsifre == hsifre:
-        print("Giriş başarılı! Hoşgeldin {}".format(ad))
+        print("Giriş başarılı! Hoşgeldin {}".format(ad.capitalize()))
         return ad
     else:
         print("Giriş başarısız!")
         return 17
-
-vtsonuc = vtKontrol()
-mevcutKullanici = girisKarar()
+def kullaniciGiris():
+    vtsonuc = vtKontrol()
+    mevcutKullanici = girisKarar()
