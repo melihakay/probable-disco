@@ -1,4 +1,4 @@
-from giris import *
+import giris
 
 mevcutKullanici = kullaniciGiris()
 print(mevcutKullanici)
