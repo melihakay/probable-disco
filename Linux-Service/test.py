@@ -18,3 +18,4 @@ if __name__ == '__main__':
     threading.Thread(target=checkChangeValue).start()
     while True:
        main()
+       
