@@ -1,7 +1,8 @@
-import os
-
-deneme_text = "Tue Aug 17 16:17:34 GMT+03:00 2021"
-veri = deneme_text.split()
-del veri[4]
-
-print(veri)
+import csv
+with open("D:\Google Drive\Kişisel\Plants of melihhakay@gmail.com (Melih Akay) (1).csv", encoding="utf-8") as liste:
+    oku = csv.reader(liste)
+    oku = list(oku)
+    oku[0][0] = 'Start Time'
+    sutunlar = oku[0]
+    print(oku)
+    print(sutunlar)
